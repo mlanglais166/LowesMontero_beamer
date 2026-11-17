@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SMILE beamer style (Nasy, https://github.com/uta-smile/beamer-theme)
+%% Adapted for our seminar presentation.
+%% Changes vs. the original:
+%%   - footer shows presenters / short title / date / slide number
+%%     instead of "Dept. CSE, UT Arlington" and the SMILE lab name;
+%%   - backup slides (after \appendix) display "Backup" instead of a
+%%     number, so the count shown during the talk only covers main slides;
+%%   - section-outline slides are not numbered;
+%%   - title page fonts, coloured blocks and a few helper colours.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetheme{default}
+\useinnertheme{circles}
+\useoutertheme{infolines}
+\usefonttheme{serif}
+
+\usepackage{etoolbox}
+
+%% Colours
+\definecolor{smileblue}{rgb}{0.2,0.2,0.7}   % beamer's default structure blue
+\definecolor{accent}{rgb}{0.70,0.10,0.10}   % key numbers and warnings
+\definecolor{softgray}{gray}{0.40}          % sources and citations
+
+%% Remove navigation symbols (cleaner on a projector)
+\setbeamertemplate{navigation symbols}{}
+
+%% Frame title: title + thin rule (original SMILE style)
+\setbeamertemplate{frametitle}{%
+  \usebeamerfont{frametitle}\insertframetitle\strut%
+  \vskip-0\baselineskip%
+  \leaders\vrule width .95\paperwidth\vskip1pt%
+  \vskip0pt%
+  \nointerlineskip
+}
+
+%% Title page
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{author}{size=\large}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamerfont{date}{size=\small}
+\setbeamercolor{date}{fg=softgray}
+
+%% Blocks: used sparingly, for the research question and key take-aways
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{fg=white,bg=smileblue}
+\setbeamercolor{block body}{fg=black,bg=smileblue!7}
+\setbeamercolor{block title alerted}{fg=white,bg=accent}
+\setbeamercolor{block body alerted}{fg=black,bg=accent!6}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+
+%% Slightly tighter nested lists
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\footnotesize}
+
+%% Footer
+\setbeamercolor{footlinecolor}{fg=cyan,bg=green}
+\setbeamercolor{author in head/foot}{fg=blue}
+
+\newif\ifbackupslides
+\backupslidesfalse
+\newif\ifoutlineframe   % section-outline frames carry no slide number
+\outlineframefalse
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.26\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+    \hspace*{2ex}\usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.50\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.24\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}
+    \insertshortdate{}\hspace*{1em}%
+    \ifbackupslides
+      Backup%
+    \else
+      \ifoutlineframe\else\insertframenumber/\inserttotalframenumber\fi%
+    \fi
+    \hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
